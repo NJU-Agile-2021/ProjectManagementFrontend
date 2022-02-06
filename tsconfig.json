@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "noUnusedParameters": true,
+    "types": [
+      "vite/client",
+      "element-plus/global",
+      "@element-plus/icons-vue"
+    ],
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./types"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "#/*": [
+        "types/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "tests/server/**/*.ts",
+    "dist",
+    "**/*.js"
+  ]
+}

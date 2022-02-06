@@ -1,0 +1,52 @@
+name: deploy
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build-and-deploy:
+    if: "contains(github.event.head_commit.message, 'release')"
+    runs-on: ubuntu-latest
+    env:
+      # build filename
+      NAME_OF_ARTIFACT: dist.zip
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # 缓存node_modules
+      - name: Get npm cache directory
+        uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      # 如果缓存没有命中，安装依赖
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: yarn
+      - name: Build
+        run: yarn build
+      # zip压缩
+      - name: zip
+        run: zip -r ${{ env.NAME_OF_ARTIFACT }} dist/*
+      # 字节跳动轻服务静态页面托管deploy
+      - name: deploy using qingfuwu
+        id: deploy_with_qingfuwu
+        run: bash ./deploy.sh
+        env:
+          service_id: ${{ secrets.QINGFUWU_SERVICE_ID }}
+          token_id: ${{ secrets.QINGFUWU_TOKEN_ID }}
+          comment: ${{ github.event.head_commit.message }}
+          file: ${{ env.NAME_OF_ARTIFACT }}
+      # 飞书机器人消息通知
+      - name: Send Feishu Message
+        uses: Rollingegg/feishu-robot-action@v1
+        with:
+          uuid: ${{ secrets.FEISHU_ROBOT_UUID }}
+          secret: ${{ secrets.FEISHU_ROBOT_SECRET }}
+          text: ${{ join(steps.deploy_with_qingfuwu.outputs.*, '\n') }}

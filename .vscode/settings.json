@@ -1,0 +1,22 @@
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    //===========================================
+    //============= Editor ======================
+    //===========================================
+    "explorer.openEditors.visible": 0,
+    "editor.tabSize": 2,
+    // 配置 ESLint 检查的文件类型
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "vue",
+        "html"
+    ],
+    // 保存时按照eslint的规则格式化
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    // 保存时自动格式化代码。可以实现保存时自动格式化style代码
+    "editor.formatOnSave": true,
+}
