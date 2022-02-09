@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import { EXCEPTION_COMPONENT, PAGE_NOT_FOUND_NAME } from '../constant'
+import { EXCEPTION_COMPONENT, LOGIN_NAME, PAGE_NOT_FOUND_NAME } from '../constant'
 
 /**
  * 404页面
@@ -18,18 +18,10 @@ export const pageNotFoundRoute: RouteRecordRaw = {
 export const loginRegisterRouter: Array<RouteRecordRaw> = [
   {
     path: '/login',
-    name: 'Login',
+    name: LOGIN_NAME,
     meta: {
       title: '登录',
     },
     component: () => import('@/views/login/Login.vue'),
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    meta: {
-      title: '注册',
-    },
-    component: () => import('@/views/login/Register.vue'),
   },
 ]

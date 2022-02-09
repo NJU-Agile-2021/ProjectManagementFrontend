@@ -1,10 +1,4 @@
-# vue3-ts-starter
-
-> **模板使用方法**（需要提前在 Github 配置好 ssh）
->
-> ```bash
-> npx degit Rollingegg/vue3-ts-starterkit#template-element --mode=git
-> ```
+# Agile-Project-Dashboard
 
 ## Features
 

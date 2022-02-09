@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite-plugin-windicss'
-
+import animationPlugin from '@windicss/plugin-animations'
+// const animationPlugin = require('@windicss/plugin-animations')
 function range(size: number, startAt = 1) {
   return Array.from(Array(size).keys()).map((i) => i + startAt)
 }
@@ -13,6 +14,16 @@ export default defineConfig({
   safelist: [
     range(3).map((i) => `p-${i}`), // p-1 to p-3
     range(10).map((i) => `mt-${i}`), // mt-1 to mt-10
+  ],
+  plugins: [
+    animationPlugin({
+      settings: {
+        animatedSpeed: 1000,
+        heartBeatSpeed: 1000,
+        hingeSpeed: 2000,
+        animationDelaySpeed: 1000,
+      },
+    }),
   ],
   theme: {
     fontFamily: {

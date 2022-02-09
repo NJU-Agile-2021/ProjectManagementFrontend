@@ -20,9 +20,11 @@ import ElementPlus from 'element-plus'
 import '@/assets/styles/element/index.scss'
 
 import { setupRouterGuard } from '@/router/guard'
+import store from './store'
 
 createApp(App)
   .use(router)
+  .use(store)
   .use(ElementPlus)
   .use(VueGtag, {
     config: {

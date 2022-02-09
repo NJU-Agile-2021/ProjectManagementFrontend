@@ -1,15 +1,11 @@
-@forward 'element-plus/theme-chalk/src/common/var.scss' with
-  (
-    // do not use same name, it will override.
-    $colors:
-      (
-        'primary': (
-          'base': #41b883,
-        )
-      ),
-    $border-radius:
-      (
-        'base': 6px
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  // do not use same name, it will override.
+  $colors:
+    (
+      'primary': (
+        'base': #41b883,
       )
-  );
+    ),
+  $border-radius: ('base': 6px, 'small': 3px)
+);
 @import 'element-plus/theme-chalk/src/index.scss';
