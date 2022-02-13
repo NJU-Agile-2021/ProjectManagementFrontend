@@ -3,6 +3,7 @@ import { login as userLogin, register as userRegister, UserForm } from '@/api/us
 import { UserState } from './types'
 import { storage } from '@/utils/storage'
 import { router } from '@/router'
+import { LOGIN_NAME } from '@/router/constant'
 const UserStorageKey = 'USER_INFO__KEY'
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
@@ -61,6 +62,7 @@ const useUserStore = defineStore('user', {
     // Logout
     async logout() {
       this.resetInfo()
+      router.push({ name: LOGIN_NAME })
     },
   },
 })

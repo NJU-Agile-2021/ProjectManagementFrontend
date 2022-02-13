@@ -1,5 +1,5 @@
 import { UserState } from '@/store/modules/user/types'
-import { mockHttp as request } from '@/utils/http'
+import { defHttp as request } from '@/utils/http'
 
 export interface UserForm {
   name: string
