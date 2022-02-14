@@ -1,5 +1,6 @@
+import { Result } from '#/axios'
 import { useUserStoreWithOut } from '@/store'
-import { defHttp as request } from '@/utils/http'
+import { defHttp as request, rawResultHttp } from '@/utils/http'
 const userStore = useUserStoreWithOut()
 
 export interface ProjectBaseInfo {
@@ -31,5 +32,28 @@ export function createProjectApi(form: ProjectParam) {
   return request.post<ProjectBaseInfo>({
     url: '/api/project/createProject',
     data: { userId: userStore.userId, ...form },
+  })
+}
+export interface ProjectMemberForm {
+  projectId: number
+  userId: number
+  role: number //0为普通用户，1为管理员,2为创建者
+}
+export interface ProjectMember extends ProjectMemberForm {
+  name: string
+  relationshipId: number
+}
+
+export function getProjectMembersApi(projectId: number) {
+  return request.get<ProjectMember[]>({
+    url: '/api/project/getProjectMembers',
+    params: { projectId },
+  })
+}
+
+export function inviteUserApi(data: ProjectMemberForm) {
+  return rawResultHttp.post<Result<boolean>>({
+    url: '/api/project/addProjectMember',
+    data,
   })
 }

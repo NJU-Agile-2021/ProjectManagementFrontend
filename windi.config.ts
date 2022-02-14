@@ -45,5 +45,9 @@ export default defineConfig({
       ...theme('colors'),
       primary: 'var(--el-color-primary)',
     }),
+    borderColor: (theme) => ({
+      ...theme('colors'),
+      primary: 'var(--el-border-color-base)',
+    }),
   },
 })

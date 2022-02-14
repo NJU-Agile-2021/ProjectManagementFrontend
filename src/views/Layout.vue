@@ -7,20 +7,17 @@
         </router-link>
       </section>
       <section class="h-[calc(100%-400px)]">
-        <router-link to="/home">
-          <div class="aside-btn">
+        <router-link
+          :to="item.path"
+          v-slot="{ href }"
+          v-for="(item, index) in menuList"
+          :key="index"
+        >
+          <div class="aside-btn" :class="{ navActive: isActive(href) }">
             <el-icon class="text-brand" :size="20">
-              <menu-icon />
+              <component :is="item.icon" />
             </el-icon>
-            <span>项目</span>
-          </div>
-        </router-link>
-        <router-link to="/todo">
-          <div class="aside-btn">
-            <el-icon class="text-brand" :size="20">
-              <menu-icon />
-            </el-icon>
-            <span>待办</span>
+            <span>{{ item.label }}</span>
           </div>
         </router-link>
       </section>
@@ -65,22 +62,40 @@
         </el-popover>
       </section>
     </el-aside>
-    <el-main><router-view /></el-main>
+    <el-main class="app-content__container"><router-view /></el-main>
   </el-container>
 </template>
 <script lang="ts" setup>
 import LogoutSvg from '@/assets/svg/LogoutSvg.vue'
 import { useUserStore } from '@/store'
-import { Menu as MenuIcon, Search, CirclePlusFilled } from '@element-plus/icons-vue'
+import { Menu as MenuIcon, Notebook, Search, CirclePlusFilled } from '@element-plus/icons-vue'
 import { useCssVar } from '@vueuse/core'
+import { useRoute } from 'vue-router'
 
 const navBarWidth = ref('80px')
 const brandColor = useCssVar('--el-color-primary')
 const userStore = useUserStore()
+const route = useRoute()
+const isActive = (href: string): boolean => {
+  return href == route.path || href == route.meta.currentActiveMenu
+}
+
+const menuList = [
+  {
+    path: '/home',
+    label: '项目',
+    icon: MenuIcon,
+  },
+  {
+    path: '/todo',
+    label: '待办',
+    icon: Notebook,
+  },
+]
 </script>
 <style lang="scss" scoped>
 .aside {
-  @apply bg-white py-2 flex flex-col;
+  @apply bg-white py-2 flex flex-col z-100;
   box-shadow: 0 1px 5px 0 rgb(57 66 60 / 20%);
 }
 .aside-btn {
@@ -90,7 +105,10 @@ const userStore = useUserStore()
     @apply truncate mt-1 w-full text-center;
   }
 }
-.router-link-active .aside-btn {
+.navActive.aside-btn {
   @apply text-brand bg-light-500;
+}
+.app-content__container {
+  --el-main-padding: 0;
 }
 </style>

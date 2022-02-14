@@ -45,7 +45,7 @@ export function useGetDetail<T>(
  * @returns 删除函数
  */
 export function useDeleteData<U>(
-  deleteDataApi: (arg: U) => Promise<Result<null>>,
+  deleteDataApi: (arg: U) => Promise<Result<boolean>>,
   option: UseFetchOption = {
     messagePrefix: '删除',
   }
@@ -53,7 +53,7 @@ export function useDeleteData<U>(
   return (fetchData: () => Promise<void>) => {
     const handleDelete = async (id: U) => {
       try {
-        const { success, message } = await deleteDataApi(id)
+        const { content: success, message } = await deleteDataApi(id)
         if (success) {
           ElMessage.success({ message: `${option.messagePrefix}成功` })
           fetchData()

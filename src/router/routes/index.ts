@@ -15,6 +15,34 @@ const appRoute: RouteRecordRaw = {
       },
       component: () => import('@/views/Home.vue'),
     },
+    {
+      path: '/project',
+      name: 'Project',
+      component: () => import('@/views/project/Detail.vue'),
+      redirect: '/project/planning',
+      meta: {
+        title: '项目详情',
+        currentActiveMenu: '/home',
+      },
+      children: [
+        {
+          path: 'planning',
+          name: 'Planning',
+          meta: {
+            title: '项目规划',
+          },
+          component: () => import('@/views/project/planning/Todo.vue'),
+        },
+        {
+          path: 'statistics',
+          name: 'Statistics',
+          meta: {
+            title: '项目统计',
+          },
+          component: () => import('@/views/project/statistics/Statistics.vue'),
+        },
+      ],
+    },
   ],
 }
 export const basicRoutes = [pageNotFoundRoute, ...loginRegisterRouter, appRoute]

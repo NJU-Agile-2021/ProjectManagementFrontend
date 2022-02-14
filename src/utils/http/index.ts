@@ -41,12 +41,11 @@ const transform: AxiosTransform = {
       throw new Error('请求出错，请稍后重试')
     }
     //  这里 success, msg, data, code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { success, message } = data
-    const result = data.data
+    const { success, message, content } = data
 
     const hasSuccess = data && Reflect.has(data, 'success') && success
     if (hasSuccess) {
-      return result
+      return content
     }
 
     throw new Error(message)

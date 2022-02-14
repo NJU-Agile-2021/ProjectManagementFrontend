@@ -29,7 +29,7 @@ export interface Result<T = any> {
   code: number
   success: boolean
   message: string
-  data: T
+  content: T
 }
 
 // multipart/form-data: upload file

@@ -16,6 +16,7 @@ body,
   --color-background: #fff;
   --color-disabled: #fafbfc;
   --color-hover: rgba(0, 0, 0, 0.1);
+  --height-nav-project: 4.5rem;
 }
 
 /* scroll-bar样式 */

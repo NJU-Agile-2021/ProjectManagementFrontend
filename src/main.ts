@@ -8,6 +8,7 @@ import 'vue-global-api/reactivity'
 // register all lifecycle hooks (`onMounted`, `onUpdated`, `onUnmounted`, etc.)
 import 'vue-global-api/lifecycle'
 
+// import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
 // custom styles
 import '@/assets/styles/index.css'

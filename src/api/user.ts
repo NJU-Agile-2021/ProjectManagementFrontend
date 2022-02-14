@@ -21,3 +21,10 @@ export function login(data: UserForm) {
 export function register(data: UserForm) {
   return request.post<UserState>({ url: '/api/user/register', data })
 }
+
+export function searchUserApi(search: string) {
+  return request.get<UserState[]>({
+    url: '/api/user/searchUsersByNameOrEmail',
+    params: { userNameOrEmail: search },
+  })
+}
