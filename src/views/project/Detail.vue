@@ -75,7 +75,7 @@ import { ArrowLeftBold, Operation, InfoFilled, Reading } from '@element-plus/ico
 import { useRouter } from 'vue-router'
 import MembersDetail from './components/MembersDetail.vue'
 const projectStore = useProjectStore()
-const fetchProjectMember = () => getProjectMembersApi(projectStore.info?.id)
+const fetchProjectMember = () => getProjectMembersApi(projectStore.info?.id ?? 0)
 const {
   loading,
   data: members,
