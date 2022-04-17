@@ -62,14 +62,13 @@ const emits = defineEmits(['update:visible', 'updateMembers'])
 const projectStore = useProjectStore()
 
 const searchName = ref('')
-const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
+const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
   if (!queryString) {
     cb([])
     return
   }
   try {
-    const res = await searchUserApi(queryString)
-    cb(res)
+    searchUserApi(queryString).then((res) => cb(res))
   } catch (error) {
     console.log(error)
   }
@@ -79,8 +78,8 @@ interface SimpleUser {
   id: number
 }
 const currentInviteUser = ref<SimpleUser>()
-const handleSelect = (item: SimpleUser) => {
-  currentInviteUser.value = item
+const handleSelect = (item: { value: any }) => {
+  currentInviteUser.value = item as unknown as SimpleUser
 }
 
 // =================================

@@ -19,6 +19,11 @@ const useProjectStore = defineStore('project', {
       this.baseInfo = info
       storage.setItem(ProjectStorageKey, JSON.stringify(info))
     },
+    setTitle(title: string) {
+      if (this.baseInfo) {
+        this.baseInfo.name = title
+      }
+    },
     setMembers(members: ProjectMember[]) {
       this.members = members
     },

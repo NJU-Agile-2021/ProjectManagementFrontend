@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center gap-2 text-secondary w-full h-$height-nav-project bg-white border-b border-primary"
+    class="flex items-center gap-2 text-secondary w-full h-$height-nav-project bg-white border-b"
   >
     <el-tooltip content="返回首页" placement="bottom" effect="light">
       <router-link to="/home">
@@ -24,12 +24,24 @@
               <el-icon :size="20"><info-filled /></el-icon>
             </div>
             <template #dropdown>
-              <div class="p-5 flex flex-col gap-5 w-60">
-                <el-alert type="info" :closable="false" :title="projectStore.info?.name" />
+              <div class="p-5 flex flex-col gap-5 w-60 items-start relative">
+                <template v-if="!isEditingProjectTitle">
+                  <el-alert type="info" :closable="false" :title="projectStore.info?.name">
+                    <div
+                      class="absolute top-1/2 right-5 transform -translate-y-1/2 p-1 cursor-pointer"
+                      @click="isEditingProjectTitle = true"
+                    >
+                      <el-icon title="编辑标题"><edit /></el-icon> </div
+                  ></el-alert>
+                </template>
+                <el-input v-else v-model="projectTitle" @keyup.enter="changeTitle" />
                 <el-alert type="info" :closable="false" title="项目描述">
                   <div>{{ projectStore.info?.description }}</div>
                 </el-alert>
-                <el-button type="text" :icon="Reading">项目公告</el-button>
+                <el-button type="text" :icon="Reading" @click="announcementsDialogVisible = true"
+                  >项目公告</el-button
+                >
+                <project-announcement v-model:visible="announcementsDialogVisible" />
               </div>
             </template>
           </el-dropdown>
@@ -49,9 +61,12 @@
           v-for="m in members"
           :key="m.userId"
         >
-          <el-avatar class="cursor-pointer" :size="32" @click="membersDrawerVisible = true">{{
-            m.name.substring(0, 4)
-          }}</el-avatar>
+          <el-avatar
+            class="cursor-pointer border border-white -ml-1"
+            :size="32"
+            @click="membersDrawerVisible = true"
+            >{{ m.name.substring(0, 4) }}</el-avatar
+          >
         </el-tooltip>
       </div>
       <el-button type="primary" plain size="small" @click="membersDrawerVisible = true"
@@ -71,9 +86,11 @@
 import { getProjectMembersApi, inviteUserApi } from '@/api/project'
 import { useDeleteData, useTableData } from '@/composable'
 import { useProjectStore } from '@/store'
-import { ArrowLeftBold, Operation, InfoFilled, Reading } from '@element-plus/icons-vue'
+import { ArrowLeftBold, Operation, InfoFilled, Reading, Edit } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import MembersDetail from './components/MembersDetail.vue'
+import ProjectAnnouncement from './components/ProjectAnnouncement.vue'
+
 const projectStore = useProjectStore()
 const fetchProjectMember = () => getProjectMembersApi(projectStore.info?.id ?? 0)
 const {
@@ -108,6 +125,24 @@ const { handleDelete: inviteUser } = useDeleteData(inviteMemberApi, { messagePre
 const handleInviteMember = (userId: number) => {
   inviteUser(userId)
 }
+
+// ================== 项目公告 =========================
+const isEditingProjectTitle = ref(false)
+const projectTitle = ref(projectStore.info?.name || '')
+watch(
+  () => projectStore.info?.name,
+  (name, _prevName) => {
+    if (!isEditingProjectTitle) {
+      projectTitle.value = name || ''
+    }
+  }
+)
+const changeTitle = () => {
+  projectStore.setTitle(projectTitle.value)
+  isEditingProjectTitle.value = false
+}
+
+const announcementsDialogVisible = ref(false)
 </script>
 <style scoped>
 .project-tabs:deep() .el-tabs__header.is-top {

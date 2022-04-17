@@ -1,6 +1,8 @@
 import { Result } from '#/axios'
 import { useUserStoreWithOut } from '@/store'
-import { defHttp as request, rawResultHttp } from '@/utils/http'
+import { defHttp, defHttp as request, rawResultHttp } from '@/utils/http'
+import { ProjectUrlEnum } from './apiUrl'
+import { AnnouncementForm, AnnouncementVO } from './models'
 const userStore = useUserStoreWithOut()
 
 export interface ProjectBaseInfo {
@@ -55,5 +57,33 @@ export function inviteUserApi(data: ProjectMemberForm) {
   return rawResultHttp.post<Result<boolean>>({
     url: '/api/project/addProjectMember',
     data,
+  })
+}
+
+export function createAnnouncement(data: AnnouncementForm) {
+  return rawResultHttp.post<Result<boolean>>({
+    url: ProjectUrlEnum.CREATE_ANNOUNCEMENT,
+    data,
+  })
+}
+
+export function updateAnnouncement(data: AnnouncementForm) {
+  return rawResultHttp.post<Result<boolean>>({
+    url: ProjectUrlEnum.UPDATE_ANNOUNCEMENT,
+    data,
+  })
+}
+
+export function deleteAnnouncement(announcementId: number) {
+  return rawResultHttp.get<Result<boolean>>({
+    url: ProjectUrlEnum.DELETE_ANNOUNCEMENT,
+    params: { announcementId },
+  })
+}
+
+export function getAnnouncementList(projectId: number) {
+  return defHttp.get<AnnouncementVO[]>({
+    url: ProjectUrlEnum.GET_ANNOUNCEMENTS,
+    params: { projectId },
   })
 }
