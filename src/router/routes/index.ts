@@ -34,6 +34,14 @@ const appRoute: RouteRecordRaw = {
           component: () => import('@/views/project/planning/Todo.vue'),
         },
         {
+          path: 'todo-item',
+          name: 'TodoItem',
+          meta: {
+            title: '任务详情',
+          },
+          component: () => import('@/views/project/planning/TodoDetail.vue'),
+        },
+        {
           path: 'statistics',
           name: 'Statistics',
           meta: {

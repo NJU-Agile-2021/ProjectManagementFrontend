@@ -6,7 +6,7 @@ export default (req, res) => {
   // 代理目标地址
   // 这里使用 backend 主要用于区分 vercel serverless 的 api 路径
   if (req.url.startsWith('/backend')) {
-    target = 'http://47.100.63.10:8088'
+    target = 'http://172.19.240.231:8088'
   }
 
   // 创建代理对象并转发请求

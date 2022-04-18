@@ -41,10 +41,7 @@ export function changeTaskFinishState(taskId: number): Promise<Result<boolean>> 
  * @throws {RequiredError}
  */
 export function checkTask(taskId: number): Promise<Result<boolean>> {
-  return rawResultHttp.post(
-    { url: TaskUrlEnum.CHECK_TASK, params: { taskId } },
-    { joinParamsToUrl: true }
-  )
+  return rawResultHttp.get({ url: TaskUrlEnum.CHECK_TASK, params: { taskId } })
 }
 /**
  *

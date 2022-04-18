@@ -35,4 +35,10 @@ export interface CreateTaskForm {
      * @memberof CreateTaskForm
      */
     title: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateTaskForm
+     */
+    taskListId: number;
 }

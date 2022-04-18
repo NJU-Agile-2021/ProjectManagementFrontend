@@ -13,6 +13,9 @@ const useProjectStore = defineStore('project', {
     info(): Nullable<ProjectBaseInfo> {
       return this.baseInfo || JSON.parse(storage.getItem(ProjectStorageKey) ?? '{}')
     },
+    id(): number {
+      return this.info?.id ?? 1
+    },
   },
   actions: {
     setInfo(info: ProjectBaseInfo) {
